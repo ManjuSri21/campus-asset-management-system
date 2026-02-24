@@ -1,0 +1,49 @@
+// Use dbdiagram.io to visualize this schema
+
+Table admins {
+  id objectId [pk]
+  fullName varchar [not null]
+  username varchar [not null, unique]
+  email varchar [not null, unique]
+  password varchar [not null]
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table assets {
+  id objectId [pk]
+  assetId varchar [not null, unique]
+  name varchar [not null]
+  category varchar [not null]
+  department varchar [not null]
+  location varchar [not null]
+  status varchar [note: "Available, In Use, Maintenance, Damaged"]
+  condition varchar [note: "Good, Damaged, Needs Repair"]
+  assignedTo varchar
+  checkedOutAt timestamp
+  checkedInAt timestamp
+  damageNotes text
+  reportedBy varchar
+  reportedAt timestamp
+  nextMaintenanceAt timestamp
+  deleted boolean [default: false]
+  updatedBy varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table activity_logs {
+  id objectId [pk]
+  action varchar [note: "created, updated, deleted, checkout, checkin"]
+  assetId varchar [not null]
+  assetName varchar
+  userId varchar [not null]
+  userName varchar [not null]
+  details text
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+// Relationships
+Ref: activity_logs.assetId > assets.assetId
+Ref: activity_logs.userId > admins.username
