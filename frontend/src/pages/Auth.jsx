@@ -41,7 +41,7 @@ export default function Auth({ setIsLoggedIn }) {
     setMsg("");
 
     try {
-      const res = await axios.post(`${API}/auth/signup`, {
+      const res = await axios.post(`${API}/api/auth/signup`, {
         fullName,
         username,
         email,
