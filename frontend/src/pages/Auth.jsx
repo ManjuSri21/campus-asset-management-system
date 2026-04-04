@@ -41,7 +41,7 @@ export default function Auth({ setIsLoggedIn }) {
     setMsg("");
 
     try {
-      const res = await axios.post(`${API}/api/auth/signup`, {
+      const res = await axios.post(`${API}/auth/signup`, {
         fullName,
         username,
         email,
@@ -69,7 +69,7 @@ export default function Auth({ setIsLoggedIn }) {
     setMsg("");
 
     try {
-      const res = await axios.post(`${API}/auth/login`, {
+      const res = await axios.post(`${API}/api/auth/login`, {
         username,
         password,
       });
