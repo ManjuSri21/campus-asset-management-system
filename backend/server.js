@@ -9,6 +9,8 @@ const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
 const assetRoutes = require("./routes/assetRoutes");
+const technicianRoutes = require("./routes/technicianRoutes");
+const requestRoutes = require("./routes/requestRoutes");
 
 connectDB();
 
@@ -20,6 +22,8 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/assets", assetRoutes);
+app.use("/api/technicians", technicianRoutes);
+app.use("/api/requests", requestRoutes);
 
 app.get("/", (req, res) => {
   res.send("Campus Asset Management Backend Running ");

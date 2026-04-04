@@ -1,0 +1,31 @@
+# CAMPUS ASSET MANAGEMENT SYSTEM - TECH STACK
+
+## Frontend
+- **Framework:** React 19
+- **Routing:** React Router DOM 7
+- **UI Components:** Material UI (@mui/material)
+- **Styling:** 
+  - Tailwind CSS 4
+  - Vanilla CSS
+  - Emotion (@emotion/react, @emotion/styled)
+- **HTTP Client:** Axios
+- **Build Tool:** Create React App (react-scripts)
+
+## Backend
+- **Runtime:** Node.js
+- **Framework:** Express.js 5
+- **Language:** JavaScript (CommonJS)
+- **Authentication:** 
+  - JSON Web Tokens (jsonwebtoken)
+  - Password Hashing (bcryptjs)
+- **Environment Management:** dotenv
+- **Middleware:** CORS
+- **Process Management:** Nodemon (Development)
+
+## Database
+- **Database:** MongoDB
+- **ODM:** Mongoose 9
+
+## Version Control & Documentation
+- **Git**
+- **DBML (ER Diagrams)**

@@ -129,7 +129,7 @@ export default function AddAsset({ setIsLoggedIn }) {
         <div className="dashboard-content add-asset-page">
           <div className="add-asset-card-full">
             <div className="add-asset-header">
-              <h2 className="add-asset-title">{isEdit ? "Update Asset ✏️" : "Add Asset ➕"}</h2>
+              <h2 className="add-asset-title">{isEdit ? "Update Asset ✏️" : "Add Asset"}</h2>
               <Link to="/assets/list" className="view-all-assets-link">View All Assets</Link>
             </div>
 
@@ -217,7 +217,7 @@ export default function AddAsset({ setIsLoggedIn }) {
 
                 <div className="form-actions form-actions-center">
                   <button type="submit" disabled={loading}>
-                    {loading ? "Saving…" : isEdit ? "Update Asset" : "Add Asset"}
+                    {loading ? "Saving…" : isEdit ? "Update" : "Add Asset"}
                   </button>
                   {isEdit && (
                     <button type="button" className="cancel-btn" onClick={handleCancel}>Cancel</button>

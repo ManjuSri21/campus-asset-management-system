@@ -10,7 +10,7 @@ const authHeaders = () => ({
   Authorization: `Bearer ${localStorage.getItem("token")}`,
 });
 
-const LIMIT = 25;
+const LIMIT = 7;
 const AUTO_REFRESH_MS = 60000;
 
 export default function AssetList({ setIsLoggedIn }) {
@@ -176,7 +176,7 @@ export default function AssetList({ setIsLoggedIn }) {
 
         <div className="dashboard-content">
           <div className="page-title-row">
-            <h2 className="page-title">Search & View Assets 📦</h2>
+            <h2 className="page-title">Assets List📦</h2>
 
             <Link to="/assets/add" className="view-all-assets-link">
               + Add New Asset
@@ -187,9 +187,9 @@ export default function AssetList({ setIsLoggedIn }) {
           {msg && <div className="success-box">{msg}</div>}
 
           <div className="assets-table-card standalone-table">
-            <div className="assets-header">
+        
               <h3 className="section-title">All Assets</h3>
-
+            <div className="assets-header">
               {/* 🔥 Auto search input */}
               <input
                 className="search-box"
@@ -208,40 +208,42 @@ export default function AssetList({ setIsLoggedIn }) {
                 <table className="assets-table">
                   <thead>
                     <tr>
+                      <th style={{ width: "60px" }}><span>S.No</span></th>
                       <th className="sortable" onClick={() => handleSort("assetId")}>
-                        Asset ID{sortIcon("assetId")}
+                        <span>Asset ID{sortIcon("assetId")}</span>
                       </th>
                       <th className="sortable" onClick={() => handleSort("name")}>
-                        Name{sortIcon("name")}
+                        <span>Name{sortIcon("name")}</span>
                       </th>
                       <th className="sortable" onClick={() => handleSort("category")}>
-                        Category{sortIcon("category")}
+                        <span>Category{sortIcon("category")}</span>
                       </th>
                       <th className="sortable" onClick={() => handleSort("department")}>
-                        Dept{sortIcon("department")}
+                        <span>Dept{sortIcon("department")}</span>
                       </th>
                       <th className="sortable" onClick={() => handleSort("location")}>
-                        Location{sortIcon("location")}
+                        <span>Location{sortIcon("location")}</span>
                       </th>
                       <th className="sortable" onClick={() => handleSort("status")}>
-                        Status{sortIcon("status")}
+                        <span>Status{sortIcon("status")}</span>
                       </th>
-                      <th>Action</th>
+                      <th style={{ textAlign: "center", minWidth: "180px" }}><span>Action</span></th>
                     </tr>
                   </thead>
 
                   <tbody>
                     {sortedAssets.length === 0 ? (
                       <tr>
-                        <td colSpan="7" className="empty-cell">
+                        <td colSpan="8" className="empty-cell">
                           {data.total === 0
                             ? "No assets yet. Add your first asset!"
                             : "No matching assets."}
                         </td>
                       </tr>
                     ) : (
-                      sortedAssets.map((a) => (
+                      sortedAssets.map((a, index) => (
                         <tr key={a._id}>
+                          <td>{(page - 1) * LIMIT + (index + 1)}</td>
                           <td>{a.assetId}</td>
                           <td>{a.name}</td>
                           <td>{a.category}</td>
@@ -252,8 +254,8 @@ export default function AssetList({ setIsLoggedIn }) {
                               {a.status}
                             </span>
                           </td>
-                          <td>
-                            <Link to={`/assets/edit/${a._id}`} className="edit-btn link-edit">
+                          <td style={{ textAlign: "center" }}>
+                            <Link to={`/assets/edit/${a._id}`} className="edit-btn">
                               Edit
                             </Link>
                             <button
@@ -273,14 +275,31 @@ export default function AssetList({ setIsLoggedIn }) {
                 {/* pagination */}
                 {data.totalPages > 1 && (
                   <div className="pagination">
-                    <button type="button" disabled={page <= 1} onClick={() => setPage((p) => p - 1)}>
+                    <button 
+                      type="button" 
+                      className="page-btn"
+                      disabled={page <= 1} 
+                      onClick={() => setPage((p) => p - 1)}
+                    >
                       Prev
                     </button>
-                    <span>
-                      Page {page} of {data.totalPages} ({data.total} total)
-                    </span>
+                    
+                    <div className="page-numbers">
+                      {Array.from({ length: data.totalPages }, (_, i) => i + 1).map((n) => (
+                        <button
+                          key={n}
+                          type="button"
+                          className={`page-num ${page === n ? "active" : ""}`}
+                          onClick={() => setPage(n)}
+                        >
+                          {n}
+                        </button>
+                      ))}
+                    </div>
+
                     <button
                       type="button"
+                      className="page-btn"
                       disabled={page >= data.totalPages}
                       onClick={() => setPage((p) => p + 1)}
                     >
@@ -289,7 +308,6 @@ export default function AssetList({ setIsLoggedIn }) {
                   </div>
                 )}
 
-                {/* 🔥 Export CSV bottom center */}
                 <div className="export-center">
                   <button type="button" className="quick-action-btn secondary" onClick={exportCSV}>
                     Export CSV

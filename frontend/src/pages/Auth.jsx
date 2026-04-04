@@ -11,6 +11,7 @@ export default function Auth({ setIsLoggedIn }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [secretKey, setSecretKey] = useState("");
 
   const [msg, setMsg] = useState("");
   const [error, setError] = useState("");
@@ -19,17 +20,21 @@ export default function Auth({ setIsLoggedIn }) {
 
   const API = API_BASE;
 
-  // If already logged in, go straight to dashboard
+  // If already logged in, go straight to their dashboard
   useEffect(() => {
-    if (
-      localStorage.getItem("loggedIn") === "true" &&
-      localStorage.getItem("token")
-    ) {
-      navigate("/dashboard", { replace: true });
+    const loggedIn = localStorage.getItem("loggedIn") === "true";
+    const userStr = localStorage.getItem("loggedUser");
+    if (loggedIn && userStr) {
+      const user = JSON.parse(userStr);
+      if (user.role === "Admin") {
+        navigate("/dashboard", { replace: true });
+      } else {
+        navigate("/technician/dashboard", { replace: true });
+      }
     }
   }, [navigate]);
 
-  // ================= SIGNUP =================
+  // ================= SIGNUP (Admin only) =================
   const handleSignup = async (e) => {
     e.preventDefault();
     setError("");
@@ -41,6 +46,7 @@ export default function Auth({ setIsLoggedIn }) {
         username,
         email,
         password,
+        secretKey,
       });
 
       setMsg(res.data.message || "Signup successful! Now login.");
@@ -50,12 +56,13 @@ export default function Auth({ setIsLoggedIn }) {
       setEmail("");
       setUsername("");
       setPassword("");
+      setSecretKey("");
     } catch (err) {
       setError(err.response?.data?.message || "Signup failed");
     }
   };
 
-  // ================= LOGIN =================
+  // ================= LOGIN (Unified) =================
   const handleSignin = async (e) => {
     e.preventDefault();
     setError("");
@@ -67,17 +74,20 @@ export default function Auth({ setIsLoggedIn }) {
         password,
       });
 
-      // Save token + admin data
+      // Save token + user data
       localStorage.setItem("loggedIn", "true");
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("loggedUser", JSON.stringify(res.data.admin));
+      localStorage.setItem("loggedUser", JSON.stringify(res.data.user));
 
       setIsLoggedIn(true);
 
-      // Show welcome message on login page, then redirect
-      const name = res.data.admin?.fullName || "Admin";
+      // Role-based redirection
+      const user = res.data.user;
+      const name = user.fullName || "User";
       setMsg(`Welcome ${name}! 🎉 You are logging in...`);
-      setTimeout(() => navigate("/dashboard"), 1800);
+
+      const redirectPath = user.role === "Admin" ? "/dashboard" : "/technician/dashboard";
+      setTimeout(() => navigate(redirectPath), 1000);
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     }
@@ -93,7 +103,7 @@ export default function Auth({ setIsLoggedIn }) {
             src="https://cdn-icons-png.flaticon.com/512/906/906343.png"
             alt="Campus Asset"
           />
-          <h2>Campus Asset Management</h2>
+          <h2>Campus Asset Management System</h2>
           <p>Track • Allocate • Maintain • Report</p>
 
           <div className="mode-switch">
@@ -118,7 +128,7 @@ export default function Auth({ setIsLoggedIn }) {
               }}
               type="button"
             >
-              Sign Up
+              Admin Sign Up
             </button>
           </div>
         </div>
@@ -129,8 +139,8 @@ export default function Auth({ setIsLoggedIn }) {
 
           <p className="subtext">
             {mode === "signin"
-              ? "Login to access the system."
-              : "Create your admin account."}
+              ? "Login to access the system (Admin or Technician)."
+              : "Register as a principal administrator."}
           </p>
 
           {error && <div className="error-box">{error}</div>}
@@ -197,6 +207,14 @@ export default function Auth({ setIsLoggedIn }) {
                 minLength={6}
               />
               <p className="auth-hint">Password must be at least 6 characters.</p>
+
+              <label>Admin Registration Key</label>
+              <input
+                type="password"
+                placeholder="Enter secret key (Required if admins exists)"
+                value={secretKey}
+                onChange={(e) => setSecretKey(e.target.value)}
+              />
 
               <button type="submit">Sign Up</button>
             </form>
