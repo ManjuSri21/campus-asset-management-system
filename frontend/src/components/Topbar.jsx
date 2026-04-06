@@ -23,7 +23,7 @@ export default function Topbar({ setIsLoggedIn, sidebarOpen, setSidebarOpen }) {
         if (!user) return;
 
         const fetchNotifs = () => {
-            axios.get(`${API_BASE}/requests`, { headers: authHeaders() })
+            axios.get(`${API_BASE}/api/requests`, { headers: authHeaders() })
                 .then(r => {
                     let unread = [];
                     if (user.role === "Technician") {
