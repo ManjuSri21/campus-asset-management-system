@@ -50,7 +50,7 @@ export default function TechnicianDetails({ type, setIsLoggedIn }) {
         try {
             setLoading(true);
             const gender = type === "Male Technicians" ? "male" : "female";
-            const res = await axios.get(`${API_BASE}/technicians?gender=${gender}&q=${searchTerm}`, {
+            const res = await axios.get(`${API_BASE}/api/technicians?gender=${gender}&q=${searchTerm}`, {
                 headers: authHeaders()
             });
             setTechnicians(res.data);
@@ -70,7 +70,7 @@ export default function TechnicianDetails({ type, setIsLoggedIn }) {
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this technician?")) {
             try {
-                await axios.delete(`${API_BASE}/technicians/${id}`, { headers: authHeaders() });
+                await axios.delete(`${API_BASE}/api/technicians/${id}`, { headers: authHeaders() });
                 fetchTechnicians();
             } catch (err) {
                 alert("Failed to delete technician");
