@@ -32,7 +32,7 @@ export default function TechnicianDashboard({ setIsLoggedIn }) {
     };
 
     useEffect(() => {
-        axios.get(`${API_BASE}/requests`, { headers: authHeaders() })
+        axios.get(`${API_BASE}/api/requests`, { headers: authHeaders() })
             .then(r => setRequests(Array.isArray(r.data) ? r.data : []))
             .catch(() => setRequests([]))
             .finally(() => setLoading(false));
