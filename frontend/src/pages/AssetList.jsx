@@ -84,7 +84,7 @@ export default function AssetList({ setIsLoggedIn }) {
     if (!window.confirm("Are you sure you want to delete this asset?")) return;
 
     try {
-      await axios.delete(`${API_BASE}/assets/${id}`, {
+      await axios.delete(`${API_BASE}/api/assets/${id}`, {
         headers: authHeaders(),
       });
 
