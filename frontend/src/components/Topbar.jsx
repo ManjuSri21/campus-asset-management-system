@@ -51,7 +51,7 @@ export default function Topbar({ setIsLoggedIn, sidebarOpen, setSidebarOpen }) {
             setShowNotif(true);
             try {
                 const endpoint = user.role === "Admin" ? "mark-admin-read" : "mark-as-read";
-                await axios.put(`${API_BASE}/requests/${endpoint}`, {}, { headers: authHeaders() });
+                await axios.put(`${API_BASE}/api/requests/${endpoint}`, {}, { headers: authHeaders() });
             } catch (err) {
                 console.error(err);
             }
