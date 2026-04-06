@@ -34,7 +34,7 @@ export default function AddTechnician({ setIsLoggedIn }) {
     useEffect(() => {
         if (id) {
             setIsEditMode(true);
-            axios.get(`${API_BASE}/technicians/${id}`, { headers: authHeaders() })
+            axios.get(`${API_BASE}/api/technicians/${id}`, { headers: authHeaders() })
                 .then(res => {
                     const tech = res.data;
                     setFormData({
@@ -80,9 +80,9 @@ export default function AddTechnician({ setIsLoggedIn }) {
             if (isEditMode) {
                 // Remove password from update if it's empty
                 if (!payload.password) delete payload.password;
-                await axios.put(`${API_BASE}/technicians/${id}`, payload, { headers: authHeaders() });
+                await axios.put(`${API_BASE}/api/technicians/${id}`, payload, { headers: authHeaders() });
             } else {
-                await axios.post(`${API_BASE}/technicians`, payload, { headers: authHeaders() });
+                await axios.post(`${API_BASE}/api/technicians`, payload, { headers: authHeaders() });
             }
             const path = formData.type === "Male Technicians" ? "/users/male-technicians" : "/users/female-technicians";
             navigate(path);
