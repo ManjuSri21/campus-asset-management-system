@@ -36,7 +36,7 @@ export default function RequestForm({ setIsLoggedIn }) {
         setError("");
         setSuccess("");
         try {
-            await axios.post(`${API_BASE}/requests`, form, { headers: authHeaders() });
+            await axios.post(`${API_BASE}/api/requests`, form, { headers: authHeaders() });
             setSuccess("Request submitted successfully! Redirecting to dashboard…");
             setTimeout(() => navigate("/technician/dashboard"), 2200);
         } catch (err) {
