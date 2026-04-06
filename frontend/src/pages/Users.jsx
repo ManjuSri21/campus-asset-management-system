@@ -28,7 +28,7 @@ export default function Users({ setIsLoggedIn }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`${API_BASE}/technicians/stats`, { headers: authHeaders() })
+        axios.get(`${API_BASE}/api/technicians/stats`, { headers: authHeaders() })
             .then(res => setStats(res.data))
             .catch(err => console.error("Failed to fetch tech stats", err));
     }, []);
