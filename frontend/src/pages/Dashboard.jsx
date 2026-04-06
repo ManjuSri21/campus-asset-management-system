@@ -65,7 +65,7 @@ export default function Dashboard({ setIsLoggedIn }) {
       .then((r) => setByCategory(Array.isArray(r.data) ? r.data : []))
       .catch(() => setByCategory([]));
 
-    axios.get(`${API_BASE}/assets`, { headers: authHeaders() })
+    axios.get(`${API_BASE}/api/assets`, { headers: authHeaders() })
       .then((r) => {
         const list = Array.isArray(r.data) ? r.data : (r.data?.assets || []);
         setRecentAssets(list.slice(0, 5));
