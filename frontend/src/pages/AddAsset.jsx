@@ -33,7 +33,7 @@ export default function AddAsset({ setIsLoggedIn }) {
   useEffect(() => {
     if (!id) return;
     axios
-      .get(`${API_BASE}/assets/${id}`, { headers: authHeaders() })
+      .get(`${API_BASE}/api/assets/${id}`, { headers: authHeaders() })
       .then((res) => {
         const asset = res.data;
         setAssetId(asset.assetId);
@@ -74,10 +74,10 @@ export default function AddAsset({ setIsLoggedIn }) {
 
     try {
       if (isEdit) {
-        await axios.put(`${API_BASE}/assets/${id}`, payload, { headers: authHeaders() });
+        await axios.put(`${API_BASE}/api/assets/${id}`, payload, { headers: authHeaders() });
         setMsg("Asset updated successfully ");
       } else {
-        await axios.post(`${API_BASE}/assets`, payload, { headers: authHeaders() });
+        await axios.post(`${API_BASE}/api/assets`, payload, { headers: authHeaders() });
         setMsg("Asset added successfully ");
       }
       setAssetId("");
@@ -92,7 +92,7 @@ export default function AddAsset({ setIsLoggedIn }) {
       setReportedBy("");
       setNextMaintenanceAt("");
       if (!isEdit) {
-        setTimeout(() => navigate("/assets/list"), 1500);
+        setTimeout(() => navigate("/api/assets/list"), 1500);
       }
     } catch (err) {
       setError(err.response?.data?.message || "Operation failed");
