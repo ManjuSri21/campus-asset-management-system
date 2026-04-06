@@ -56,12 +56,12 @@ export default function Dashboard({ setIsLoggedIn }) {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    axios.get(`${API_BASE}/assets/stats`, { headers: authHeaders() })
+    axios.get(`${API_BASE}/api/assets/stats`, { headers: authHeaders() })
       .then((r) => setStats(r.data))
       .catch(() => { })
       .finally(() => setStatsLoading(false));
 
-    axios.get(`${API_BASE}/assets/by-category`, { headers: authHeaders() })
+    axios.get(`${API_BASE}/api/assets/by-category`, { headers: authHeaders() })
       .then((r) => setByCategory(Array.isArray(r.data) ? r.data : []))
       .catch(() => setByCategory([]));
 
@@ -72,7 +72,7 @@ export default function Dashboard({ setIsLoggedIn }) {
       })
       .catch(() => setRecentAssets([]));
 
-    axios.get(`${API_BASE}/assets/activity/log?limit=6`, { headers: authHeaders() })
+    axios.get(`${API_BASE}/api/assets/activity/log?limit=6`, { headers: authHeaders() })
       .then((r) => setActivityLog(Array.isArray(r.data) ? r.data : []))
       .catch(() => setActivityLog([]));
   }, []);
