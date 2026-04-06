@@ -40,7 +40,7 @@ export default function AssetList({ setIsLoggedIn }) {
       const params = new URLSearchParams({ page: pageNum, limit: LIMIT });
       if (q && String(q).trim()) params.set("q", String(q).trim());
 
-      const res = await axios.get(`${API_BASE}/assets?${params}`, {
+      const res = await axios.get(`${API_BASE}/api/assets?${params}`, {
         headers: authHeaders(),
       });
 
@@ -125,7 +125,7 @@ export default function AssetList({ setIsLoggedIn }) {
   const exportCSV = async () => {
     try {
       const res = await axios.get(
-        `${API_BASE}/assets?page=1&limit=1000${search ? `&q=${encodeURIComponent(search)}` : ""
+        `${API_BASE}/api/assets?page=1&limit=1000${search ? `&q=${encodeURIComponent(search)}` : ""
         }`,
         { headers: authHeaders() }
       );
