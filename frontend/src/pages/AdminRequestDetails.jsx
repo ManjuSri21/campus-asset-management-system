@@ -30,7 +30,7 @@ export default function AdminRequestDetails({ setIsLoggedIn }) {
 
     useEffect(() => {
         setLoading(true);
-        axios.get(`${API_BASE}/requests`, { headers: authHeaders() })
+        axios.get(`${API_BASE}/api/requests`, { headers: authHeaders() })
             .then(r => {
                 const found = r.data.find(req => req._id === id);
                 if (found) {
@@ -46,7 +46,7 @@ export default function AdminRequestDetails({ setIsLoggedIn }) {
         setUpdating(true);
         try {
             await axios.put(
-                `${API_BASE}/requests/${id}/status`,
+                `${API_BASE}/api/requests/${id}/status`,
                 { status, adminNotes },
                 { headers: authHeaders() }
             );
